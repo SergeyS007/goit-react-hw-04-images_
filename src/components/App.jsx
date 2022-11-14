@@ -54,6 +54,7 @@ function App() {
   const loadMore = () => {
     setPage(prevState => prevState + 1);
     setIsShown(true);
+    console.log('Hello');
   };
 
   const toggleModal = largeFoto => {
