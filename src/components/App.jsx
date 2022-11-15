@@ -22,6 +22,22 @@ function App() {
   }, [imageString]);
 
   useEffect(() => {
+    const getImages = () => {
+      setIsLoading(true);
+
+      fetchImages(imageString, page)
+        .then(res => res.json())
+        .then(data => {
+          setImageList(prevState => [...prevState, ...helper(data.hits)]);
+        })
+        .catch(error => {
+          console.log(error.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+          setIsShown(true);
+        });
+    };
     if (imageString === '') {
       return;
     }
@@ -32,23 +48,6 @@ function App() {
     setPage(1);
     setImageString(imageString);
     setIsShown(prevState => !prevState);
-  };
-
-  const getImages = () => {
-    setIsLoading(true);
-
-    fetchImages(imageString, page)
-      .then(res => res.json())
-      .then(data => {
-        setImageList(prevState => [...prevState, ...helper(data.hits)]);
-      })
-      .catch(error => {
-        console.log(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsShown(true);
-      });
   };
 
   const loadMore = () => {
