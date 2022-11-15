@@ -4,13 +4,16 @@ import css from 'components/Modal/Modal.module.css';
 
 function Modal({ onClickModal, largeFoto }) {
   useEffect(() => {
+    const onCloseByEscape = e => {
+      if (e.code === 'Escape') {
+        onClickModal();
+      }
+    };
     window.addEventListener('keydown', onCloseByEscape);
-  }, []);
-  useEffect(() => {
     return () => {
       window.removeEventListener('keydown', onCloseByEscape);
     };
-  }, []);
+  }, [onClickModal]);
 
   // componentDidMount() {
   //   window.addEventListener('keydown', onCloseByEscape);
@@ -19,11 +22,6 @@ function Modal({ onClickModal, largeFoto }) {
   //   window.removeEventListener('keydown', onCloseByEscape);
   // }
 
-  const onCloseByEscape = e => {
-    if (e.code === 'Escape') {
-      onClickModal();
-    }
-  };
   const onClosebyBackdrop = e => {
     if (e.target === e.currentTarget) {
       onClickModal();
